@@ -16,4 +16,7 @@
       <p>{{ message }}</p>
     {% endif %}
   {% endif %}
+  {% if read %}
+      {{ read.as_p }}
+  {% endif %}
 {% endblock %}

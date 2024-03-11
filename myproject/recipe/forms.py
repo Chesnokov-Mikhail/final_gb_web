@@ -18,6 +18,7 @@ class AddEditRecipe(forms.Form):
     cooking_steps = forms.CharField(required=False, widget=forms.Textarea(), label='Пошаговое описание приготовления')
     cooking_time = forms.TimeField(widget=TimePickerInput(format='%H:%M'), label='Время приготовления')
     image = forms.ImageField(label='Изображение блюда', widget=MyClearableFileInput)
-    author = forms.ModelChoiceField(queryset=Author.objects.all(), widget=forms.Select(), label='Выберите автора', to_field_name="id", empty_label=None)
+    author = forms.ModelChoiceField(queryset=Author.objects.all(), widget=forms.Select(), label='Выберите автора', to_field_name="id")
     categories = forms.ModelMultipleChoiceField(queryset=CategorieRecipe.objects.all(), widget=forms.SelectMultiple(),
                                                  label='Выберите категории', to_field_name="id")
+    modify_date = forms.DateTimeField(initial=datetime.datetime.now(), disabled=True, label='Дата изменения')
