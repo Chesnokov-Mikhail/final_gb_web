@@ -7,7 +7,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         for i in range(1,10):
-            categorie = CategorieRecipe(name = f'CategorieRecipe_{i}',
+            categorie = CategorieRecipe(title = f'CategorieRecipe_{i}',
                                 description = '. '.join(lorem_ipsum.words(4,common=False)),
                                 )
             categorie.save()
