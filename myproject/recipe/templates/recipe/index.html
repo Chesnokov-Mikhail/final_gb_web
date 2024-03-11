@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+  <h1>{{ content.title }}</h1>
+  {% if content.result %}
+    <ol>
+      {% for recipe,item in content.result.items %}
+        <li>
+          Название рецепта: {{ recipe.name }}
+          Описание: {{ recipe.description }}
+          Автор: {{ recipe.author }}
+          {% if item.ingredients %}
+          <p>Ингредиенты:</p>
+          <ol>
+            {% for product in item.ingredients %}
+            <li>
+              Название: {{ product.name }}
+            </li>
+            {% endfor %}
+          </ol>
+          {% endif %}
+          {% if item.categories %}
+          <p>Категории:</p>
+          <ol>
+            {% for categorie in item.categories %}
+            <li>
+              Название: {{ categorie.title }}
+            </li>
+            {% endfor %}
+          </ol>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p>Пока нет рецептов на сайте</p>
+  {% endif %}
+{% endblock %}
