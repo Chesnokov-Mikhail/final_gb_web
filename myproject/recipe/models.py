@@ -7,7 +7,7 @@ class Author(models.Model):
     registration_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f'Author: {self.name}, email: {self.email}, registration_date: {self.registration_date}'
+        return f'Author: {self.name}'
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
@@ -22,7 +22,7 @@ class CategorieRecipe(models.Model):
     description = models.TextField(default=None)
 
     def __str__(self):
-        return f'Categoriename: {self.title}, description: {self.description}'
+        return f'Categoriename: {self.title}'
 
 class Recipe(models.Model):
     name = models.CharField(max_length=100)

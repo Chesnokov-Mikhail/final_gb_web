@@ -10,9 +10,10 @@
     <ol>
       {% for recipe,item in content.result.items %}
         <li>
-          Название рецепта: {{ recipe.name }}
-          Описание: {{ recipe.description }}
-          Автор: {{ recipe.author }}
+          Название рецепта: {{ recipe.name }} <br>
+          Описание: {{ recipe.description }} <br>
+          Автор: {{ recipe.author }} <br>
+          Время приготовления: {{ recipe.cooking_time }} <br>
           {% if item.ingredients %}
           <p>Ингредиенты:</p>
           <ol>
