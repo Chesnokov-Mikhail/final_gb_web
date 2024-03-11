@@ -19,9 +19,10 @@ class Product(models.Model):
 
 class CategorieRecipe(models.Model):
     title = models.CharField(max_length=100)
+    description = models.TextField(default=None)
 
     def __str__(self):
-        return f'Categoriename: {self.title}'
+        return f'Categoriename: {self.title}, description: {self.description}'
 
 class Recipe(models.Model):
     name = models.CharField(max_length=100)
