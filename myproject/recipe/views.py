@@ -9,13 +9,15 @@ from .models import Product, CategorieRecipe, Recipe, Author
 
 class GetIndex(View):
     def get(self, request):
-        recipes = choices(Recipe.objects.all(), k=5)
         result = {}
-        for recipe in recipes:
-            ingredients = recipe.ingredients.all()
-            categories = recipe.categories.all()
-            result[recipe] = {'ingredients': ingredients,
-                              'categories': categories}
+        recipes_queryset = Recipe.objects.all()
+        if recipes_queryset:
+            recipes = choices(recipes_queryset, k=5)
+            for recipe in recipes:
+                ingredients = recipe.ingredients.all()
+                categories = recipe.categories.all()
+                result[recipe] = {'ingredients': ingredients,
+                                  'categories': categories}
         title_content = 'Наши рецепты:'
         context = {'title': 'Сайт рецептов',
                     'content': {'title': title_content,
