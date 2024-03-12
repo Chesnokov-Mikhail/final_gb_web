@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+  <h1>{{ content.title }}</h1>
+  {% if content.result %}
+    <ol>
+      {% for recipe,item in content.result.items %}
+        <li>
+          Название рецепта: <a href="{% url 'get_recipe' recipe.id %}">{{ recipe.name }}</a>
+          <a href="{% url 'edit_recipe' recipe.id 'edit' %}">Редактирование</a> <br>
+          Описание: {{ recipe.description }} <br>
+          Автор: {{ recipe.author }} <br>
+          Время приготовления: {{ recipe.cooking_time }} <br>
+          {% if recipe.image %}
+            Изображение блюда: <img src="{{ recipe.image.url }}" style="width:100%; height:auto;"> <br>
+          {% else %}
+            нет картинки <br>
+          {% endif %}
+          {% if item.ingredients %}
+          <p>Ингредиенты:</p>
+          <ol>
+            {% for product in item.ingredients %}
+            <li>
+              Название: {{ product.name }}
+            </li>
+            {% endfor %}
+          </ol>
+          {% endif %}
+          {% if item.categories %}
+          <p>Категории:</p>
+          <ol>
+            {% for categorie in item.categories %}
+            <li>
+              Название: {{ categorie.title }}
+            </li>
+            {% endfor %}
+          </ol>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p>Пока нет рецептов на сайте</p>
+  {% endif %}
+{% endblock %}

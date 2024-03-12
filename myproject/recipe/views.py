@@ -27,9 +27,28 @@ class GetIndex(View):
                     }
         return render(request, 'recipe/index.html', context)
 
+class GetReciepAll(View):
+    def get(self, request):
+        result = {}
+        recipes_queryset = Recipe.objects.all()
+        if recipes_queryset:
+            for recipe in recipes_queryset:
+                ingredients = recipe.ingredients.all()
+                categories = recipe.categories.all()
+                result[recipe] = {'ingredients': ingredients,
+                                  'categories': categories}
+        title_content = 'Список рецептов:'
+        context = {'title': 'Сайт рецептов',
+                    'content': {'title': title_content,
+                                'result': result,
+                                }
+                    }
+        return render(request, 'recipe/recipes_all.html', context)
+
 class PostRecipe(View):
     def get(self,request, **kwargs):
         recipe_id = kwargs.get('recipe_id',None)
+        recipe_edit = kwargs.get('edit', None)
         context = {'title': 'Сайт рецептов',}
         if recipe_id:
             recipe_select = Recipe.objects.get(pk=recipe_id)
@@ -45,10 +64,14 @@ class PostRecipe(View):
                                                 'modify_date': recipe_select.modify_date,
                                                  }
                                         )
-                for key in form.fields.keys():
-                    form.fields[key].disabled = True
-                title_content = 'Просмотр рецепта'
-                context['read'] = form
+                if recipe_edit:
+                    title_content = 'Редактирование рецепта'
+                    context['form'] = form
+                else:
+                    for key in form.fields.keys():
+                        form.fields[key].disabled = True
+                    title_content = 'Просмотр рецепта'
+                    context['read'] = form
         else:
             form = AddEditRecipe()
             title_content = 'Добавление рецепта'
