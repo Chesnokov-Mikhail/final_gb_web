@@ -30,7 +30,7 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(to=Product)
     cooking_steps = models.TextField(default=None)
     cooking_time = models.TimeField()
-    image = models.ImageField(null=True)
+    image = models.ImageField(null=True, blank=True)
     author = models.ForeignKey(to=Author, on_delete=models.CASCADE)
     modify_date = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField(to=CategorieRecipe)

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+  <h1>{{ content.title }}</h1>
+  {% if content.result %}
+    <ol>
+      {% for author in content.result %}
+        <li>
+          Имя автора: <a href="{% url 'get_author' author.id %}">{{ author.name }}</a>
+          {% if perms.recipe.change_author %}
+            <a href="{% url 'edit_author' author.id 'edit' %}">Редактирование</a> <br>
+          {% else %}
+            <br>
+          {% endif %}
+          Дата регистрации: {{ author.registration_date }} <br>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p>Пока нет авторов на сайте</p>
+  {% endif %}
+{% endblock %}

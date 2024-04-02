@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+  <h1>{{ content.title }}</h1>
+  {% if content.result %}
+    <ol>
+      {% for product in content.result %}
+        <li>
+          Название продукта: <a href="{% url 'get_product' product.id %}">{{ product.name }}</a>
+          {% if perms.recipe.change_product %}
+            <a href="{% url 'edit_product' product.id 'edit' %}">Редактирование</a> <br>
+          {% else %}
+            <br>
+          {% endif %}
+          Дата добавление продукта: {{ product.add_date }} <br>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p>Пока не добавлено ни одного продукта на сайте</p>
+  {% endif %}
+{% endblock %}

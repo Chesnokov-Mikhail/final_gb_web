@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+  <h1>{{ content.title }}</h1>
+  {% if content.result %}
+    <ol>
+      {% for categorie in content.result %}
+        <li>
+          Название категории: <a href="{% url 'get_categorie' categorie.id %}">{{ categorie.title }}</a>
+          {% if perms.recipe.change_categorie %}
+            <a href="{% url 'edit_categorie' categorie.id 'edit' %}">Редактирование</a> <br>
+          {% else %}
+            <br>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p>Пока не добавлена ни одна категория рецепта на сайте</p>
+  {% endif %}
+{% endblock %}
