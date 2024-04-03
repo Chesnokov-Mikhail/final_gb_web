@@ -32,8 +32,11 @@ if os.environ.get("DEBUG") == "False":
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1',]
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'machesnokov.pythonanywhere.com',]
 
 # Application definition
 
@@ -82,13 +85,25 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': Path(BASE_DIR).joinpath('db.sqlite3'),
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': Path(BASE_DIR).joinpath('db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.getenv("MYSQL_DBNAME"),
+        "USER": os.getenv("MYSQL_USER"),
+        "PASSWORD": os.getenv("MYSQL_PASSWORD"),
+        "HOST": os.getenv("MYSQL_HOST"),
+        "OPTIONS": {
+            "init_command": "SET NAMES 'utf8mb4';SET sql_mode = 'STRICT_TRANS_TABLES'",
+            "charset": "utf8mb4",
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -125,10 +140,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATIC_ROOT = Path(BASE_DIR).joinpath('static')
-STATICFILES_DIRS = [
-     Path(BASE_DIR).joinpath('static'),
- ]
+STATIC_ROOT = Path(BASE_DIR).joinpath('static')
+# STATICFILES_DIRS = [
+#      Path(BASE_DIR).joinpath('static'),
+#  ]
 MEDIA_URL = 'media/'
 MEDIA_ROOT = Path(BASE_DIR).joinpath('media')
 # Default primary key field type
