@@ -35,9 +35,9 @@ class GetCategorie(View):
         return render(request, 'recipe/add_categorie.html', context)
 
 class PostCategorie(LoginRequiredMixin, PermissionRequiredMixin, View):
-    permission_required = ('recipe.view_categorie_recipe',
-                           'recipe.change_categorie_recipe',
-                           'recipe.add_categorie_recipe')
+    permission_required = ('recipe.view_categorierecipe',
+                           'recipe.change_categorierecipe',
+                           'recipe.add_categorierecipe')
     login_url = settings.LOGIN_URL
     def get(self,request, **kwargs):
         redirect_field_name = request.path
