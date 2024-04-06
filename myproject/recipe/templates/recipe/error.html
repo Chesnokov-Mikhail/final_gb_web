@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+  <h1>{{ content.title }}</h1>
+  {% if content.result %}
+      <p>{{ content.result }}</p>
+  {% else %}
+    <p>Неизвестная ошибка.</p>
+  {% endif %}
+{% endblock %}

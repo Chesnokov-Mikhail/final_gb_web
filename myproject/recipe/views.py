@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
 from django.views import View
+from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.conf import settings
@@ -11,6 +12,38 @@ from .models import Product, CategorieRecipe, Recipe, Author
 from .forms import AddEditRecipe, AddEditAuthor, AddEditProduct, AddEditCategorieRecipe
 
 # Create your views here.
+
+class ErrorHandlers(TemplateView):
+    template_name = 'recipe/error.html'
+    error_code = 404
+
+    '''Если ошибка в любом методе http, то возвращаем get '''
+    def dispatch(self, request, *args, **kwargs):
+        return self.get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.error_code == 404:
+            result = 'К сожалению запрашиваемой вами страницы нет.'
+        if self.error_code == 403:
+            result = 'У вас нет разрешения на выполнения данной операции.'
+        if self.error_code == 400:
+            result = 'Ошибка в запросе.'
+        if self.error_code == 401:
+            result = 'Для выполнения операции, вам необходимо авторизоваться на сайте.'
+        if self.error_code == 500:
+            result = 'Что-то на сайте пошло не так!'
+        context['title'] = 'Сайт рецептов'
+        context['content'] = {'title': 'Ошибка:',
+                                'result': result,
+                              }
+        return context
+
+    '''Возвращаем корректный код ответа'''
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs = response_kwargs or {}
+        response_kwargs.update(status=self.error_code)
+        return super().render_to_response(context, **response_kwargs)
 
 class GetCategorie(View):
     def get(self,request, **kwargs):
