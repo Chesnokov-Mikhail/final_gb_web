@@ -18,6 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from recipe.views import ErrorHandlers
+
+handler400 = ErrorHandlers.as_view(error_code=400)
+handler401 = ErrorHandlers.as_view(error_code=401)
+handler403 = ErrorHandlers.as_view(error_code=403)
+handler404 = ErrorHandlers.as_view(error_code=404)
+handler500 = ErrorHandlers.as_view(error_code=500)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

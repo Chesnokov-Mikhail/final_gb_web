@@ -1,12 +1,6 @@
 from django.urls import path
 from . import views
 
-handler400 = views.ErrorHandlers.as_view(error_code=400)
-handler401 = views.ErrorHandlers.as_view(error_code=401)
-handler403 = views.ErrorHandlers.as_view(error_code=403)
-handler404 = views.ErrorHandlers.as_view(error_code=404)
-handler500 = views.ErrorHandlers.as_view(error_code=500)
-
 urlpatterns = [
     path('', views.GetIndex.as_view(), name='get_index'),
     path('recipes_all/', views.GetReciepAll.as_view(), name='recipe_all'),
